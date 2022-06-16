@@ -33,4 +33,11 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
 
+	<Target Name="Coverage">
+		<ItemGroup>
+			<CoverageFiles Include="OpenCover.xml" />
+		</ItemGroup>
+		<ReportGenerator ProjectDirectory="$(MSBuildProjectDirectory)" ReportFiles="@(CoverageFiles)" TargetDirectory="report" ReportTypes="Html;Latex" HistoryDirectory="history" Plugins="CustomReports.dll" AssemblyFilters="+Include;-Excluded" VerbosityLevel="Verbose" />
+	</Target>
+
 </Project>
