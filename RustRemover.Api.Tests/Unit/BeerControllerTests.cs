@@ -5,9 +5,9 @@ using System.Net;
 using System.Web.Http.Results;
 using Xunit;
 
-namespace RustRemover.Api.Tests
+namespace RustRemover.Api.Tests.Unit
 {
-    public class BeerControllerTest
+    public class BeerControllerTests
     {
         private const string invalidGuid = "66666666-6666-6666-6666-666666666666";
 

@@ -2,9 +2,9 @@ using RustRemover.Api.Controllers;
 using System.Linq;
 using Xunit;
 
-namespace RustRemover.Api.Tests
+namespace RustRemover.Api.Tests.Unit
 {
-    public class ValuesControllerTest
+    public class ValuesControllerTests
     {
         [Fact]
         public void GetShouldReturnAListOfValues()
