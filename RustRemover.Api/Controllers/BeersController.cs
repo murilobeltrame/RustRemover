@@ -1,5 +1,5 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using RustRemover.Api.Models;
+using System;
 using System.Net;
 using System.Web.Http;
 
@@ -56,13 +56,5 @@ namespace RustRemover.Api.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-    }
-
-    public class Beer
-    {
-        public Guid Id { get; set; }
-        
-        [Required]
-        public string Description { get; set; }
     }
 }

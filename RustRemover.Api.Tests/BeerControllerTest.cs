@@ -1,4 +1,5 @@
 ﻿using RustRemover.Api.Controllers;
+using RustRemover.Api.Models;
 using System;
 using System.Net;
 using System.Web.Http.Results;
