@@ -1,7 +1,10 @@
 ﻿using RustRemover.Api.Controllers;
-using RustRemover.Api.Models;
+using RustRemover.Domain.Entities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http.Results;
 using Xunit;
 
@@ -12,25 +15,25 @@ namespace RustRemover.Api.Tests.Unit
         private const string invalidGuid = "66666666-6666-6666-6666-666666666666";
 
         [Fact]
-        public void GetShouldReturnAList()
+        public async Task GetShouldReturnAList()
         {
             var controller = new BeersController();
-            var actionResult = controller.Get();
-            var contentResult = actionResult as OkNegotiatedContentResult<Beer[]>;
+            var actionResult = await controller.Get();
+            var contentResult = actionResult as OkNegotiatedContentResult<IEnumerable<Beer>>;
 
-            Assert.IsType<OkNegotiatedContentResult<Beer[]>>(actionResult);
+            Assert.IsType<OkNegotiatedContentResult<IEnumerable<Beer>>>(actionResult);
             Assert.NotNull(contentResult);
             Assert.NotNull(contentResult.Content);
-            Assert.Equal(5, contentResult.Content.Length);
+            Assert.Equal(5, contentResult.Content.Count());
         }
 
         [Fact]
-        public void GetWithValidIdShouldReturnBrahmaWithThatId()
+        public async Task GetWithValidIdShouldReturnBrahmaWithThatId()
         {
             var id = Guid.NewGuid();
             var controller = new BeersController();
 
-            var actionResult = controller.Get(id);
+            var actionResult = await controller.Get(id);
             var contentResult = actionResult as OkNegotiatedContentResult<Beer>;
 
             Assert.IsType<OkNegotiatedContentResult<Beer>>(actionResult);
@@ -41,34 +44,34 @@ namespace RustRemover.Api.Tests.Unit
         }
 
         [Fact]
-        public void GetWithEmptyIdShouldReturnBadRequest()
+        public async Task GetWithEmptyIdShouldReturnBadRequest()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Get(Guid.Empty);
+            var actionResult = await controller.Get(Guid.Empty);
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void GetWithInvalidIdShouldReturnNotFound()
+        public async Task GetWithInvalidIdShouldReturnNotFound()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Get(new Guid(invalidGuid));
+            var actionResult = await controller.Get(new Guid(invalidGuid));
 
             Assert.IsType<NotFoundResult>(actionResult);
         }
 
         [Fact]
-        public void PostWithValidBeerShouldReturnCreatedWithThatBeerAndLink()
+        public async Task PostWithValidBeerShouldReturnCreatedWithThatBeerAndLink()
         {
             var id = Guid.NewGuid();
             var description = "Original";
             var beer = new Beer { Id = id, Description = description };
             var controller = new BeersController();
 
-            var actionResult = controller.Post(beer);
+            var actionResult = await controller.Post(beer);
             var contentResult = actionResult as CreatedAtRouteNegotiatedContentResult<Beer>;
 
             Assert.IsType<CreatedAtRouteNegotiatedContentResult<Beer>>(actionResult);
@@ -81,24 +84,24 @@ namespace RustRemover.Api.Tests.Unit
         }
 
         [Fact]
-        public void PostWithNullDataShouldReturnBadRequest()
+        public async Task PostWithNullDataShouldReturnBadRequest()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Post(null);
+            var actionResult = await controller.Post(null);
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void PutWithValidBeerShouldReturnNoContent()
+        public async Task PutWithValidBeerShouldReturnNoContent()
         {
             var id = Guid.NewGuid();
             var description = "Original";
             var beer = new Beer { Id = id, Description = description };
             var controller = new BeersController();
 
-            var actionResult = controller.Put(id, beer);
+            var actionResult = await controller.Put(id, beer);
             var contentResult = actionResult as StatusCodeResult;
 
             Assert.IsType<StatusCodeResult>(actionResult);
@@ -107,57 +110,57 @@ namespace RustRemover.Api.Tests.Unit
         }
 
         [Fact]
-        public void PutWithNullDataShouldReturnBadRequest()
+        public async Task PutWithNullDataShouldReturnBadRequest()
         {
             var id = Guid.NewGuid();
             var controller = new BeersController();
 
-            var actionResult = controller.Put(id, null);
+            var actionResult = await controller.Put(id, null);
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void PutWithEmptyIdShouldReturnBadRequest()
+        public async Task PutWithEmptyIdShouldReturnBadRequest()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Put(Guid.Empty, new Beer());
+            var actionResult = await controller.Put(Guid.Empty, new Beer());
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void PutWithInvalidReferenceShouldReturnBadRequest()
+        public async Task PutWithInvalidReferenceShouldReturnBadRequest()
         {
             var id = Guid.NewGuid();
             var beer = new Beer { Id = Guid.NewGuid() };
             var controller = new BeersController();
 
-            var actionResult = controller.Put(id, beer);
+            var actionResult = await controller.Put(id, beer);
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void PutWithInvalidIdShouldReturnNotFound()
+        public async Task PutWithInvalidIdShouldReturnNotFound()
         {
             var id = new Guid(invalidGuid);
             var beer = new Beer { Id = id };
             var controller = new BeersController();
 
-            var actionResult = controller.Put(id, beer);
+            var actionResult = await controller.Put(id, beer);
 
             Assert.IsType<NotFoundResult>(actionResult);
         }
 
         [Fact]
-        public void DeleteWithValidIdShouldReturnNoContent()
+        public async Task DeleteWithValidIdShouldReturnNoContent()
         {
             var id = Guid.NewGuid();
             var controller = new BeersController();
 
-            var actionResult = controller.Delete(id);
+            var actionResult = await controller.Delete(id);
             var contentResult = actionResult as StatusCodeResult;
 
             Assert.IsType<StatusCodeResult>(actionResult);
@@ -166,21 +169,21 @@ namespace RustRemover.Api.Tests.Unit
         }
 
         [Fact]
-        public void DeleteWithEmptyIdShouldReturnBadRequest()
+        public async Task DeleteWithEmptyIdShouldReturnBadRequest()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Delete(Guid.Empty);
+            var actionResult = await controller.Delete(Guid.Empty);
 
             Assert.IsType<BadRequestResult>(actionResult);
         }
 
         [Fact]
-        public void DeleteWithInvalidIdShouldReturnNotFound()
+        public async Task DeleteWithInvalidIdShouldReturnNotFound()
         {
             var controller = new BeersController();
 
-            var actionResult = controller.Delete(new Guid(invalidGuid));
+            var actionResult = await controller.Delete(new Guid(invalidGuid));
 
             Assert.IsType<NotFoundResult>(actionResult);
         }

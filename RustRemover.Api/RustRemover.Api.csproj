@@ -168,7 +168,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Beer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +252,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RustRemover.Application\RustRemover.Application.csproj">
+      <Project>{24c64d1c-b0e6-422c-b351-a868fb073b3f}</Project>
+      <Name>RustRemover.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RustRemover.Domain\RustRemover.Domain.csproj">
+      <Project>{0a2e324b-21a7-4b2b-b316-c11470ed984b}</Project>
+      <Name>RustRemover.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\RustRemover.Infrastructure\RustRemover.Infrastructure.csproj">
+      <Project>{3d7c0be9-4009-4b02-9194-0e48acb443cc}</Project>
+      <Name>RustRemover.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

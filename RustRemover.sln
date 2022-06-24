@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.32510.428
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustRemover.Api", "RustRemover.Api\RustRemover.Api.csproj", "{4DC215DE-193F-4579-9144-448127FD7F26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustRemover.Api.Tests", "RustRemover.Api.Tests\RustRemover.Api.Tests.csproj", "{32D30406-A3B4-4029-84D3-0EBD124B03B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RustRemover.Api.Tests", "RustRemover.Api.Tests\RustRemover.Api.Tests.csproj", "{32D30406-A3B4-4029-84D3-0EBD124B03B8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustRemover.Application", "RustRemover.Application\RustRemover.Application.csproj", "{24C64D1C-B0E6-422C-B351-A868FB073B3F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustRemover.Domain", "RustRemover.Domain\RustRemover.Domain.csproj", "{0A2E324B-21A7-4B2B-B316-C11470ED984B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RustRemover.Infrastructure", "RustRemover.Infrastructure\RustRemover.Infrastructure.csproj", "{3D7C0BE9-4009-4B02-9194-0E48ACB443CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +27,18 @@ Global
 		{32D30406-A3B4-4029-84D3-0EBD124B03B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32D30406-A3B4-4029-84D3-0EBD124B03B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32D30406-A3B4-4029-84D3-0EBD124B03B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24C64D1C-B0E6-422C-B351-A868FB073B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24C64D1C-B0E6-422C-B351-A868FB073B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24C64D1C-B0E6-422C-B351-A868FB073B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24C64D1C-B0E6-422C-B351-A868FB073B3F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A2E324B-21A7-4B2B-B316-C11470ED984B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A2E324B-21A7-4B2B-B316-C11470ED984B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A2E324B-21A7-4B2B-B316-C11470ED984B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A2E324B-21A7-4B2B-B316-C11470ED984B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D7C0BE9-4009-4B02-9194-0E48ACB443CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D7C0BE9-4009-4B02-9194-0E48ACB443CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D7C0BE9-4009-4B02-9194-0E48ACB443CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D7C0BE9-4009-4B02-9194-0E48ACB443CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

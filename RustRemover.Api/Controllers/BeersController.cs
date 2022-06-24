@@ -1,60 +1,82 @@
-﻿using RustRemover.Api.Models;
+﻿using RustRemover.Application;
+using RustRemover.Application.Interfaces;
+using RustRemover.Domain.Entities;
+using RustRemover.Infrastructure;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace RustRemover.Api.Controllers
 {
     public class BeersController : ApiController
     {
-        private const string invalidGuid = "66666666-6666-6666-6666-666666666666";
+        private readonly IApplication<Beer> _application;
 
-        public IHttpActionResult Get()
+        public BeersController() : this(new BeerApplication(new BeerRepository())) { }
+
+        public BeersController(IApplication<Beer> application)
         {
-            return Ok(new Beer[] { 
-               new Beer{Id=Guid.NewGuid(), Description= "Spaten" },
-               new Beer{Id=Guid.NewGuid(), Description= "Skol" },
-               new Beer{Id=Guid.NewGuid(), Description= "Stella Artois" },
-               new Beer{Id=Guid.NewGuid(), Description= "Budweiser" },
-               new Beer{Id=Guid.NewGuid(), Description= "Beck's" },
-            });
+            _application = application;
         }
 
-        public IHttpActionResult Get(Guid id)
+        public async Task<IHttpActionResult> Get()
+        {
+            return Ok(await _application.Fetch());
+        }
+
+        public async Task<IHttpActionResult> Get(Guid id)
         {
             if (id == Guid.Empty) return BadRequest();
-            if (id == new Guid(invalidGuid)) return NotFound();
-            return Ok(new Beer
+            try
             {
-                Id = id,
-                Description = "Brahma"
-            });
+                return Ok(await _application.Get(id));
+            }
+            catch (ArgumentException)
+            {
+                return NotFound();
+            }
         }
 
-        public IHttpActionResult Post(Beer beer)
+        public async Task<IHttpActionResult> Post(Beer beer)
         {
             if (beer == null) return BadRequest();
             if (!ModelState.IsValid) return BadRequest();
-            return CreatedAtRoute(nameof(Get), new { Id = beer.Id }, beer);
+            var createdBeer = await _application.Create(beer);
+            return CreatedAtRoute(nameof(Get), new { createdBeer.Id }, createdBeer);
         }
 
-        public IHttpActionResult Put(Guid id, Beer beer)
+        public async Task<IHttpActionResult> Put(Guid id, Beer beer)
         {
             if (id == Guid.Empty) return BadRequest();
             if (beer == null) return BadRequest();
             if (beer.Id != id) return BadRequest();
             if (!ModelState.IsValid) return BadRequest();
-            if (id == new Guid(invalidGuid)) return NotFound();
 
-            return StatusCode(HttpStatusCode.NoContent);
+            try
+            {
+                await _application.Update(beer);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound();
+            }
         }
 
-        public IHttpActionResult Delete(Guid id)
+        public async Task<IHttpActionResult> Delete(Guid id)
         {
             if (id == Guid.Empty) return BadRequest();
-            if (id == new Guid(invalidGuid)) return NotFound();
 
-            return StatusCode(HttpStatusCode.NoContent);
+            try
+            {
+                await _application.Delete(id);
+                return StatusCode(HttpStatusCode.NoContent);
+            }
+            catch (ArgumentException)
+            {
+                return NotFound();
+            }
         }
     }
 }
