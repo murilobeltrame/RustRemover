@@ -1,4 +1,5 @@
-﻿using RustRemover.Application.Interfaces;
+﻿using Ardalis.GuardClauses;
+using RustRemover.Application.Interfaces;
 using RustRemover.Domain.Entities;
 using RustRemover.Domain.Interfaces;
 using System;
@@ -24,21 +25,25 @@ namespace RustRemover.Application
 
         public async Task<Beer> Get(Guid id, CancellationToken cancellationToken = default)
         {
+            Guard.Against.Default(id, nameof(id));
             return await _repository.Get(id, cancellationToken);
         }
 
         public async Task<Beer> Create(Beer beer, CancellationToken cancellationToken = default)
         {
+            Guard.Against.Null(beer, nameof(beer));
             return await _repository.Create(beer, cancellationToken);
         }
 
         public async Task Update(Beer beer, CancellationToken cancellationToken = default)
         {
+            Guard.Against.Null(beer, nameof(beer));
             await _repository.Update(beer, cancellationToken);
         }
 
         public async Task Delete(Guid id, CancellationToken cancellationToken = default)
         {
+            Guard.Against.Default(id, nameof(id));
             await _repository.Delete(id, cancellationToken);
         }
     }
